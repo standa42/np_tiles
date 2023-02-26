@@ -57,8 +57,7 @@ var sketch = (p) => {
     startTileCoordinates = null
     startPosition = null
 
-    if(game.checkWin())
-      game.initLevel(p)
+    game.checkWin()
 
     game.render(p)
   }
