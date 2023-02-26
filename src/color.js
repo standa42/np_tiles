@@ -3,7 +3,7 @@ export class Color{
 
     static generateRandomColor() {
         if(Color.Count == 0)
-            Color.Count = 10
+            Color.Count = 6
         
         return Color.colorsNumbers[Math.floor(Math.random() * Color.Count)]
     }
