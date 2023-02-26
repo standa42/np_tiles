@@ -2,6 +2,7 @@ import p5 from "p5"
 
 import { Game } from "./game";
 import Vector from "vectory-lib"
+import { Color } from "./color"
 
 // document.addEventListener('contextmenu', event => event.preventDefault());
 
@@ -93,6 +94,22 @@ var sketch = (p) => {
     game.gameSize = new Vector(game.gameSize.x, game.gameSize.y+1)
     game.initLevel(p)
     game.render(p)
+  })
+
+  document.getElementById("colorsMinus").addEventListener("click", () => {
+    if(Color.Count > 2) {
+      Color.Count -= 1
+      game.initLevel(p)
+      game.render(p)
+    }
+  })
+
+  document.getElementById("colorsPlus").addEventListener("click", () => {
+    if(Color.Count < 10) {
+      Color.Count += 1
+      game.initLevel(p)
+      game.render(p)
+    }
   })
 
 };

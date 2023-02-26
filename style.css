@@ -45,7 +45,7 @@ main {
   cursor: pointer;
 }
 
-#gameSize, #xAxis, #yAxis {
+#gameSize, #xAxis, #yAxis, #colors {
   display: flex;
   flex-direction: row;
 }

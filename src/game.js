@@ -115,6 +115,7 @@ export class Game {
             }
         }
         document.getElementById("score").innerHTML = `Correct out of all: ${correct}/${all} = ${Math.round(correct/all*100)}% ${correct==all ? "✔️" : ""}`
+        document.getElementById("colorsCountText").innerHTML = `Colors: ${Color.Count}`
 
         let tileCount = this.gameSize.x * this.gameSize.y
         function factorial(x) {return (x > 1) ? x * factorial(x-1) : 1;}
