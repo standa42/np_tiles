@@ -15,18 +15,12 @@ export class Game {
     initLevel(p) {
         if(this.gameSize == null)
             this.gameSize = new Vector(2, 2)
-        // else if(this.gameSize.x == this.gameSize.y)
-        //     this.gameSize.addTo(new Vector(1, 0))
-        // else 
-        //     this.gameSize.addTo(new Vector(0, 1))
-
         if(this.gameSize.x == 1 && this.gameSize.y == 1)
             this.gameSize = new Vector(2, 1)
 
         p.resizeCanvas(this.gameSize.x * this.tileSize, this.gameSize.y * this.tileSize);
 
         this.populateLevel()
-        console.log("level initialized")
     }
 
     populateLevel() {
@@ -41,10 +35,6 @@ export class Game {
                 let rightTile = x-1 >= 0 ? this.tiles[x-1][y] : null
                 let downTile = y-1 >= 0 ? this.tiles[x][y-1] : null
                 this.tiles[x][y] = new Tile(downTile, rightTile)
-                // console.log("tile created")
-                // console.log(x, y)
-                // console.log(rightTile, downTile)
-                // console.log(this.tiles[x][y].up, this.tiles[x][y].left, this.tiles[x][y].right, this.tiles[x][y].down)
             }
         }
 
@@ -82,9 +72,6 @@ export class Game {
                 
                 let tile = this.tiles[x][y]
 
-                // console.log("tile rendered")
-                // console.log(x, y)
-                // console.log(this.tiles[x][y].up, this.tiles[x][y].left, this.tiles[x][y].down, this.tiles[x][y].right)
                 p.fill(...Color.getColorFromString(tile.down))
                 p.triangle(leftBottom.x, leftBottom.y, rightBottom.x, rightBottom.y, center.x, center.y)
                 p.fill(...Color.getColorFromString(tile.right))
@@ -127,8 +114,6 @@ export class Game {
         return match
     }
 
-    
-
     click (x, y) {
         // index tiles based on position in squared grid of size tileSizes
         let tileX = Math.floor(x / this.tileSize)
@@ -153,6 +138,4 @@ export class Game {
         this.tiles[tile1.x][tile1.y] = this.tiles[tile2.x][tile2.y]
         this.tiles[tile2.x][tile2.y] = temp
     }
-
-    
 }
