@@ -2,49 +2,44 @@ import { Color } from "./color.js"
 
 export class Tile {
     constructor(downTile, rightTile) {
-        // console.log("tile constuctor", downTile, rightTile)
-        if(downTile != null)
-            this.down = downTile.up
-        else
-            this.down = Color.generateRandomColor()
-        
-        if(rightTile != null)
-            this.right = rightTile.left
-        else
-            this.right = Color.generateRandomColor()
+        this._initTileColors(downTile, rightTile)
+    }
 
+    _initTileColors(downTile, rightTile) {
+        // match tile color if there is a neighbor
+        this.down = downTile != null ? downTile.up : Color.generateRandomColor()
+        this.right = rightTile != null ? rightTile.left : Color.generateRandomColor()
+
+        // generate random colors for the rest
         this.left = Color.generateRandomColor()
         this.up = Color.generateRandomColor()
-        // console.log("tile constuctor", this.up, this.left, this.right, this.down)
     }
 
     rotateRight() {
-        let temp = this.up
+        const temp = this.up
         this.up = this.left
         this.left = this.down
         this.down = this.right
         this.right = temp
     }
 
-     match(rightTile, downTile) {
-        let match = true
-        let count = 0
-        let matchCount = 0
+    // TODO: take this from tile to grid, because grid should have overview of the mutual positions of tiles
+    match(rightTile, downTile) {
+        let neighborCount = 0
+        let neighborColorMatchCount = 0
 
         if(rightTile != null) {
-            match = match && rightTile.left == this.right
-            count++
+            neighborCount++
             if(rightTile.left == this.right)
-                matchCount++
+                neighborColorMatchCount++
         }
             
         if(downTile != null) {
-            match = match && downTile.up == this.down
-            count++
+            neighborCount++
             if(downTile.up == this.down)
-                matchCount++
+                neighborColorMatchCount++
         }
             
-        return [match, count, matchCount]
+        return [neighborCount, neighborColorMatchCount]
     }
 }

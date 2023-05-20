@@ -2,14 +2,29 @@ export class Color{
     static Count = 0
 
     static generateRandomColor() {
-        if(Color.Count == 0)
-            Color.Count = 6
-        
-        return Color.colorsNumbers[Math.floor(Math.random() * Color.Count)]
+        Color._safeCheckColorCount()
+        return this._getRandomInt(Color.Count) 
     }
 
-    static getColorFromString(color) {
-        return Color.colorsStrings[color]
+    static getColorRGBFromNumber(colorNumber) {
+        return this.getColorRGBFromString(this.getColorStringFromNumber(colorNumber))
+    }
+
+    static getColorRGBFromString(colorString) {
+        return Color.colorsStrings[colorString]
+    }
+
+    static getColorStringFromNumber(colorNumber) {
+        return Color.colorsNumbers[colorNumber]
+    }
+
+    static _safeCheckColorCount() {
+        if(Color.Count == null || Color.Count == undefined || Color.Count < 2)    
+            Color.Count = 6
+    }
+
+    static _getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
     }
 
     static colorsStrings = {  

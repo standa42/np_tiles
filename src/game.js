@@ -13,8 +13,10 @@ export class Game {
     }
 
     initLevel(p) {
+        // initial game size
         if(this.gameSize == null)
             this.gameSize = new Vector(2, 2)
+        // minimal game size
         if(this.gameSize.x == 1 && this.gameSize.y == 1)
             this.gameSize = new Vector(2, 1)
 
@@ -38,12 +40,14 @@ export class Game {
             }
         }
 
+        // shuffle but in a way that the game is not solved
         do {
             this.reshuffle()
         } while(this.checkWin())
     }
 
     reshuffle() {
+        // reshuffle by going through multiple cycles of swapping tiles and rotating them
         for(let i = 0; i < 100; i++){
             for(let x = 0; x < this.gameSize.x; x++) {
                 for(let y = 0; y < this.gameSize.y; y++) {
@@ -60,7 +64,7 @@ export class Game {
         }
     }
 
-    render (p) {
+    render(p) {
         // render tiles in a square grid as tiles of size tileSize as colored tiles in p5 where each tile has 4 colors
         for(let x = 0; x < this.gameSize.x; x++) {
             for(let y = 0; y < this.gameSize.y; y++) {
@@ -72,13 +76,13 @@ export class Game {
                 
                 let tile = this.tiles[x][y]
 
-                p.fill(...Color.getColorFromString(tile.down))
+                p.fill(...Color.getColorRGBFromNumber(tile.down))
                 p.triangle(leftBottom.x, leftBottom.y, rightBottom.x, rightBottom.y, center.x, center.y)
-                p.fill(...Color.getColorFromString(tile.right))
+                p.fill(...Color.getColorRGBFromNumber(tile.right))
                 p.triangle(rightBottom.x, rightBottom.y, rightTop.x, rightTop.y, center.x, center.y)
-                p.fill(...Color.getColorFromString(tile.up))
+                p.fill(...Color.getColorRGBFromNumber(tile.up))
                 p.triangle(rightTop.x, rightTop.y, leftTop.x, leftTop.y, center.x, center.y)
-                p.fill(...Color.getColorFromString(tile.left))
+                p.fill(...Color.getColorRGBFromNumber(tile.left))
                 p.triangle(leftTop.x, leftTop.y, leftBottom.x, leftBottom.y, center.x, center.y)
             }
         }    
@@ -88,15 +92,12 @@ export class Game {
         let correct = 0
         let all = 0
 
-        let match = true
         for(let x = 0; x < this.gameSize.x; x++) {
             for(let y = 0; y < this.gameSize.y; y++) {
                 let rightTile = x-1 >= 0 ? this.tiles[x-1][y] : null
                 let downTile = y-1 >= 0 ? this.tiles[x][y-1] : null
                 let tile = this.tiles[x][y]
-                const [currentTileMatch, count, matchCount] = tile.match(rightTile, downTile)
-                match = match && currentTileMatch
-                console.log(correct, all, matchCount, count, match)
+                const [count, matchCount] = tile.match(rightTile, downTile)
                 correct += matchCount
                 all += count
             }
@@ -110,8 +111,6 @@ export class Game {
         let rotationsOfTileCount = 4 ** tileCount
         let allOptions = permutationsOfTileCount * rotationsOfTileCount
         document.getElementById("stats").innerHTML = `All possible configurations ~ ${allOptions}`
-
-        return match
     }
 
     click (x, y) {

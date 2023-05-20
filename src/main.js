@@ -4,8 +4,6 @@ import { Game } from "./game";
 import Vector from "vectory-lib"
 import { Color } from "./color"
 
-// document.addEventListener('contextmenu', event => event.preventDefault());
-
 var game = null
 
 var startPosition = null
@@ -33,7 +31,7 @@ var sketch = (p) => {
     startTileCoordinates = new Vector(Math.floor(p.mouseX / game.tileSize), Math.floor(p.mouseY / game.tileSize))
     startTime = new Date()
   }
-
+ 
   p.mouseDragged = () => {
     drag = drag + 1
   }
